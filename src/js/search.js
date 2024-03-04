@@ -11,6 +11,7 @@ var input = document.createElement('input');
 input.setAttribute('type', 'text');
 input.setAttribute('id', 'q');
 input.setAttribute('name', 'q');
+input.setAttribute('placeholder', '| explore with perplexity.ai');
 input.autofocus = true;
 
 // Append input to form
@@ -52,14 +53,14 @@ searchInput.addEventListener('input', () => {
   if (searchInput.value.startsWith('g ')) {
     currentEngine = 'google';
     searchForm.action = 'https://www.google.com/search?q=' + encodeURIComponent(getSearchQuery(searchInput.value));
-    searchInput.style.borderColor = 'green';
-    searchInput.style.outlineColor = 'rgba(0, 255, 0, 0.25)';
+    searchInput.style.borderColor = 'rgba(166, 209, 137, 1)';
+    searchInput.style.outlineColor = 'rgba(166, 209, 137, 0.50)';
   } else if (searchInput.value.startsWith('d ')) {
     const query = getSearchQuery(searchInput.value);
     currentEngine = 'duckduckgo';
     searchForm.action = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
-    searchInput.style.borderColor = 'orange';
-    searchInput.style.outlineColor = 'rgba(255, 120, 0, 0.25)';
+    searchInput.style.borderColor = 'rgba(239, 159, 118, 1)';
+    searchInput.style.outlineColor = 'rgba(239, 159, 118, 0.5)';
   } else {
     currentEngine = defaultEngine;
     searchForm.action = 'https://perplexity.ai/search'; 

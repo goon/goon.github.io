@@ -21,7 +21,6 @@ main {
     padding: var(--spacing-l) var(--spacing-m) var(--spacing-m) var(--spacing-m);
     row-gap: var(--spacing-l);
     width: 20rem;
-    
 }
 
 header {
@@ -51,13 +50,13 @@ header {
 
 #date,
 #location {
-    color: var(--primary-link-hover-color);
+    color: #4c4f69;
     font-weight: 700;
 }
 
 #time,
 #details {
-    color: var(--primary-link-color);
+    color: #4c4f69;
     text-transform: capitalize;
 }
 
@@ -116,7 +115,7 @@ aside svg { height: 4.5rem; }
     #weather img { filter: drop-shadow(0 0 0 hsl(var(--color-black-hsl) / 0.75)); }
 
     #search input {
-        background-image: var(--svg-search-light-gray);
+        /* background-image: var(--svg-search-light-gray); */
         border: 0.125rem solid hsl(var(--color-black-hsl) / 0.25);
     } 
 
@@ -126,14 +125,36 @@ aside svg { height: 4.5rem; }
 
 #search input:focus {
     background-color: hsl(var(--color-white-hsl) / 0.025);
-    border-color: rgba(15, 15, 15, 0.75);
-    outline-color: rgba(15, 15, 15, 0.20);
+    border-color: rgba(186, 187, 241, 1);
+    outline-color: rgba(186, 187, 241, 0.50);
     
 }
 
 .favicon {
     margin-right: var(--spacing-s);
     height: 1.2rem;
+}
+
+.pulsate-fwd {
+	-webkit-animation: pulsate-fwd 1.5s ease-in-out infinite both;
+	        animation: pulsate-fwd 1.5s ease-in-out infinite both;
+}
+
+input::-webkit-input-placeholder {
+    text-align: right;
+    color: #9CA0B0;
+}
+
+input::-moz-placeholder {
+    text-align: right;
+}
+
+input:-ms-input-placeholder {
+    text-align: right;
+}
+
+input::placeholder {
+    text-align: right;
 }
 
 /* Responsive Media Queries */
@@ -148,7 +169,6 @@ aside svg { height: 4.5rem; }
 
     aside img,
     aside svg { height: 7.5rem; }
-
 }
 
 
