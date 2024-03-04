@@ -24,9 +24,12 @@ function fetchSuggestions(input, shortcutUsed) {
   // Remove the shortcut from the input
   const query = getSearchQuery(input);
 
-  fetch(`https://api.allorigins.win/raw?url=https://suggestqueries.google.com/complete/search?client=firefox&q=${query}`)
-  .then(response => response.json())
-  .then(data => {
+  const targetUrl = encodeURIComponent('https://suggestqueries.google.com/complete/search?client=chrome&q=' + query);
+  const proxyUrl = 'https://corsproxy.io/?';
+  
+  fetch(proxyUrl + targetUrl)
+    .then(response => response.json())
+    .then(data => {
       // Clear the dropdown menu
       dropdownMenu.innerHTML = '';
 
