@@ -23,9 +23,8 @@ searchInput.parentNode.appendChild(dropdownMenu);
 function fetchSuggestions(input, shortcutUsed) {
   // Remove the shortcut from the input
   const query = getSearchQuery(input);
-  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  fetch(`https://suggestqueries.google.com/complete/search?client=firefox&q=${query}`)
-  fetch(proxyUrl + targetUrl)
+
+  fetch(`https://api.allorigins.win/raw?url=https://suggestqueries.google.com/complete/search?client=firefox&q=${query}`)
   .then(response => response.json())
   .then(data => {
       // Clear the dropdown menu
