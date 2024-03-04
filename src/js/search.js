@@ -5,13 +5,11 @@ form.setAttribute('action', 'https://www.perplexity.ai/search/');
 form.setAttribute('method', 'get');
 form.setAttribute('data-default-engine', 'perplexity');
 
-
 // Create input element
 var input = document.createElement('input');
 input.setAttribute('type', 'text');
 input.setAttribute('id', 'q');
 input.setAttribute('name', 'q');
-input.setAttribute('placeholder', '| explore with perplexity.ai');
 input.autofocus = true;
 
 // Append input to form
@@ -37,10 +35,11 @@ const searchEngineNames = {
   'google': 'Google',
   'duckduckgo': 'DuckDuckGo',
   'perplexity': 'Perplexity',
+  'reddit': 'Reddit'
 };
 
 function getSearchQuery(input) {
-  if (input.startsWith('g ') || input.startsWith('d ')) {
+  if (input.startsWith('g ') || input.startsWith('d ') || input.startsWith('a ') || input.startsWith('y ') || input.startsWith('r ')){
     var parts = input.split(' ');
     var query = parts.slice(1).join(' ');
     return query;
@@ -50,17 +49,32 @@ function getSearchQuery(input) {
 }
 
 searchInput.addEventListener('input', () => {
+  const query = getSearchQuery(searchInput.value);
   if (searchInput.value.startsWith('g ')) {
     currentEngine = 'google';
-    searchForm.action = 'https://www.google.com/search?q=' + encodeURIComponent(getSearchQuery(searchInput.value));
+    searchForm.action = 'https://www.google.com/search?q=' + encodeURIComponent(query);
     searchInput.style.borderColor = 'rgba(166, 209, 137, 1)';
-    searchInput.style.outlineColor = 'rgba(166, 209, 137, 0.50)';
+    searchInput.style.outlineColor = 'rgba(166, 209, 137, 0.5)';
   } else if (searchInput.value.startsWith('d ')) {
-    const query = getSearchQuery(searchInput.value);
     currentEngine = 'duckduckgo';
     searchForm.action = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
     searchInput.style.borderColor = 'rgba(239, 159, 118, 1)';
     searchInput.style.outlineColor = 'rgba(239, 159, 118, 0.5)';
+  } else if (searchInput.value.startsWith('a ')) {
+    currentEngine = 'amazon';
+    searchForm.action = 'https://www.amazon.com/s?k=' + encodeURIComponent(query);
+    searchInput.style.borderColor = 'rgba(30, 102, 245, 1)';
+    searchInput.style.outlineColor = 'rgba(30, 102, 245, 0.5)';
+  } else if (searchInput.value.startsWith('y ')) {
+    currentEngine = 'youtube';
+    searchForm.action = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
+    searchInput.style.borderColor = 'rgba(230, 69, 83, 1)';
+    searchInput.style.outlineColor = 'rgba(230, 69, 83, 0.5)';
+  } else if (searchInput.value.startsWith('r ')) {
+    currentEngine = 'reddit';
+    searchForm.action = 'https://www.reddit.com/r/' + encodeURIComponent(query);
+    searchInput.style.borderColor = 'rgba(254, 100, 11, 1)'; 
+    searchInput.style.outlineColor = 'rgba(254, 100, 11, 0.5)';
   } else {
     currentEngine = defaultEngine;
     searchForm.action = 'https://perplexity.ai/search'; 
@@ -88,6 +102,15 @@ searchForm.addEventListener('submit', (e) => {
   } else if (currentEngine === 'duckduckgo') {
     e.preventDefault();
     window.location.href = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
+  } else if (currentEngine === 'amazon') {
+    e.preventDefault();
+    window.location.href = 'https://www.amazon.com/s?k=' + encodeURIComponent(query);
+  } else if (currentEngine === 'youtube') {
+    e.preventDefault();
+    window.location.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
+  } else if (currentEngine === 'reddit') {
+    e.preventDefault();
+    window.location.href = 'https://www.reddit.com/r/' + encodeURIComponent(query);
   } else if (currentEngine === 'perplexity') { 
     e.preventDefault();
     window.location.href = 'https://search.perplexity.ai/search?q=' + encodeURIComponent(query);
@@ -101,6 +124,4 @@ searchInput.addEventListener('keydown', (e) => {
     searchInput.style.borderColor = '';
     searchInput.style.outlineColor = '';
   }
-})
-
-
+});

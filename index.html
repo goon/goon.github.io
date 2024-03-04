@@ -14,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="icon" type="image/ico" href="src/img/favicon.ico">
     <link rel="stylesheet" href="src/css/main.css">
-    <title>~/goon.github.io</title>
+    <title>~ goon</title>
 </head>
 <body onload="goon()">
     <main>
@@ -24,16 +24,19 @@
         </header>
         <section id="goon">
             <aside>
-                <img src="src/img/logo2.png" class="pulsate-fwd" alt="logo">
+                <img src="src/img/logo.png" class="pulsate-fwd" alt="logo">
             </aside>
 
             <section id="search" autofocus>
                     <!-- Search Bar will be inserted here -->
+                    <div id="autocomplete-dropdown"></div>
             </section>
+            
         </section>
     </main>
     <script src="src/js/timedateweather.js"></script>
     <script src="src/js/search.js"></script>
+    <script src="src/js/autocomplete.js"></script>
     <script>goon();</script>
 </body>
 </html>
