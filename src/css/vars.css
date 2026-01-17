@@ -1,49 +1,89 @@
+:root, [data-theme="kanagawa"] {
+    --bg-color: #181820;
+    --surface-color: #1F1F28;
+    --text-color: #DCD7BA;
+    --subtext-color: #727169;
+    --accent-primary: #957FB8;
+    --accent-secondary: #7E9CD8;
+    --accent-tertiary: #7AA89F;
+    --glass-bg: rgba(24, 24, 32, 0.8);
+    --glass-border: rgba(60, 60, 72, 0.5);
+}
+
+[data-theme="tokyo-night"] {
+    --bg-color: #1a1b26;
+    --surface-color: #24283b;
+    --text-color: #a9b1d6;
+    --subtext-color: #565f89;
+    --accent-primary: #bb9af7;
+    --accent-secondary: #7aa2f7;
+    --accent-tertiary: #7dcfff;
+    --glass-bg: rgba(26, 27, 38, 0.8);
+    --glass-border: rgba(41, 46, 66, 0.5);
+}
+
+[data-theme="rose-pine"] {
+    --bg-color: #191724;
+    --surface-color: #1f1d2e;
+    --text-color: #e0def4;
+    --subtext-color: #908caa;
+    --accent-primary: #c4a7e7;
+    --accent-secondary: #ebbcba;
+    --accent-tertiary: #31748f;
+    --glass-bg: rgba(25, 23, 36, 0.8);
+    --glass-border: rgba(64, 61, 82, 0.5);
+}
+
+[data-theme="gruvbox"] {
+    --bg-color: #282828;
+    --surface-color: #3c3836;
+    --text-color: #ebdbb2;
+    --subtext-color: #928374;
+    --accent-primary: #d3869b;
+    --accent-secondary: #83a598;
+    --accent-tertiary: #b8bb26;
+    --glass-bg: rgba(40, 40, 40, 0.8);
+    --glass-border: rgba(80, 73, 69, 0.5);
+}
+
+[data-theme="everforest"] {
+    --bg-color: #2d353b;
+    --surface-color: #343f44;
+    --text-color: #d3c6aa;
+    --subtext-color: #859289;
+    --accent-primary: #d699b6;
+    --accent-secondary: #7fbbb3;
+    --accent-tertiary: #a7c080;
+    --glass-bg: rgba(45, 53, 59, 0.8);
+    --glass-border: rgba(71, 82, 88, 0.5);
+}
+
+[data-theme="catppuccin-mocha"] {
+    --bg-color: #1e1e2e;
+    --surface-color: #181825;
+    --text-color: #cdd6f4;
+    --subtext-color: #7f849c;
+    --accent-primary: #cba6f7;
+    --accent-secondary: #89b4fa;
+    --accent-tertiary: #94e2d5;
+    --glass-bg: rgba(30, 30, 46, 0.8);
+    --glass-border: rgba(49, 50, 68, 0.5);
+}
+
 :root {
-    /*
-    Colors - pulled from https://nipponcolors.com
-
-    HSL(a) is used for better control.
-    https://css-tricks.com/hsl-hsla-is-great-for-programmatic-color-control/
-    https://css-tricks.com/color-alpha-anywhere/
-    */
-    --color-black-hsl: 0 0% 11%; /* #1C1C1C */
-    --color-black: hsl(var(--color-black-hsl));
-    --color-orange-hsl: 19 88% 53%; /* #F05E1C */
-    --color-orange: hsl(var(--color-orange-hsl));
-    --color-white-hsl: 60 100% 99%; /* #FFFFFC */
-    --color-white: hsl(var(--color-white-hsl));
-
-    /* Font-sizing */
-    --font-size-body: 1rem; /* 16px */
-
-    /* Spacing */
-    --spacing-xs: 0.25rem; /* 4px */
-    --spacing-s: 0.5rem; /* 8px */
+    --font-sans: 'Maple Mono', system-ui, -apple-system, sans-serif;
+    --font-mono: 'Maple Mono', monospace;
+    --spacing-xs: 0.25rem;
+    --spacing-s: 0.5rem;
     --spacing-m: 1rem;
-    --spacing-l: 2rem; /* 32px */
-    --spacing-xl: 4rem; /* 64px */
-
-    /* SVGs */
-    --svg-search-gray: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzIgMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzUyNTI1MiIgZD0iTTMyLDI5LjU4bC05LjQ3LTkuNDdjMS42LTIuMTEsMi41Ni00LjcyLDIuNTYtNy41NkMyNS4wOSw1LjYzLDE5LjQ2LDAsMTIuNTQsMFMwLDUuNjMsMCwxMi41NHM1LjYzLDEyLjU0LDEyLjU0LDEyLjU0YzIuODQsMCw1LjQ2LS45Niw3LjU2LTIuNTZsOS40Nyw5LjQ3LDIuNDItMi40MlpNMy40MiwxMi41NEMzLjQyLDcuNTEsNy41MSwzLjQyLDEyLjU0LDMuNDJzOS4xMiw0LjA4LDkuMTIsOS4xMi00LjA4LDkuMTItOS4xMiw5LjEyUzMuNDIsMTcuNTgsMy40MiwxMi41NFoiLz48L3N2Zz4=');
-    --svg-search-light-gray: url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMzIgMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbD0iIzg3ODc4NyIgZD0iTTMyLDI5LjU4bC05LjQ3LTkuNDdjMS42LTIuMTEsMi41Ni00LjcyLDIuNTYtNy41NkMyNS4wOSw1LjYzLDE5LjQ2LDAsMTIuNTQsMFMwLDUuNjMsMCwxMi41NHM1LjYzLDEyLjU0LDEyLjU0LDEyLjU0YzIuODQsMCw1LjQ2LS45Niw3LjU2LTIuNTZsOS40Nyw5LjQ3LDIuNDItMi40MlpNMy40MiwxMi41NEMzLjQyLDcuNTEsNy41MSwzLjQyLDEyLjU0LDMuNDJzOS4xMiw0LjA4LDkuMTIsOS4xMi00LjA4LDkuMTItOS4xMiw5LjEyUzMuNDIsMTcuNTgsMy40MiwxMi41NFoiLz48L3N2Zz4=');
-}  
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --primary-background-color: var(--color-black);
-        --primary-font-color: var(--color-white);
-        --primary-link-color: hsl(var(--color-white-hsl) / 0.5);
-        --primary-link-hover-color: var(--color-white);
-    }
+    --spacing-l: 1.5rem;
+    --spacing-xl: 3rem;
+    --border-radius-m: 8px;
+    --border-radius-l: 12px;
+    --glass-blur: blur(12px);
 }
 
-/* Light Mode */
-@media (prefers-color-scheme: light) {
-    :root {
-        --primary-background-color: hsl(var(--color-black-hsl) / 0.075);
-        --primary-font-color: hsl(var(--color-black-hsl) / 0.75);
-        --primary-link-color: hsl(var(--color-black-hsl) / 0.75);
-        --primary-link-hover-color: var(--color-black);
-    }
-}
+
+
+
+

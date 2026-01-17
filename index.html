@@ -13,30 +13,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="icon" type="image/ico" href="src/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maple-mono@1.0.6/maple-mono.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
     <link rel="stylesheet" href="src/css/main.css">
-    <title>~ goon</title>
+    <title>goon</title>
 </head>
 <body onload="goon()">
-    <main>
-        <header>
-            <section id="date-time"></section>
-            <section id="weather"></section>
-        </header>
-        <section id="goon">
-            <aside>
-                <img src="src/img/logo.png" class="pulsate-fwd" alt="logo">
-            </aside>
+    <div class="ambient-bg">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
 
-            <section id="search" autofocus>
-                    <!-- Search Bar will be inserted here -->
-                    <div id="autocomplete-dropdown"></div>
-            </section>
-            
-        </section>
-    </main>
+    <div class="container">
+        <header class="header">
+            <div class="greeting">
+                <span id="greeting" class="greeting-text">~/goon@github</span>
+            </div>
+        </header>
+
+        <div class="search-row">
+            <div class="search-container">
+                <div id="search" class="search-box">
+                    <span class="search-main-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    <form id="search-form" action="https://duckduckgo.com" method="get">
+                        <input type="text" id="q" name="q" placeholder="Search the web..." autocomplete="off" autofocus>
+                    </form>
+                    <div class="search-engines">
+                        <button class="engine active" data-engine="duckduckgo" title="DuckDuckGo"><i class="fa-solid fa-search"></i></button>
+                        <button class="engine" data-engine="github" title="GitHub"><i class="fa-brands fa-github"></i></button>
+                        <button class="engine" data-engine="youtube" title="YouTube"><i class="fa-brands fa-youtube"></i></button>
+                        <button class="engine" data-engine="cosmos" title="Cosmos"><i class="fa-solid fa-atom"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <main class="links-grid" id="links-grid">
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fa-solid fa-shield-halved"></i> <span>Proton</span>
+                </div>
+                <div class="category-links">
+                    <a href="https://mail.proton.me"><i class="fa-solid fa-envelope"></i> Mail</a>
+                    <a href="https://drive.proton.me"><i class="fa-solid fa-cloud"></i> Drive</a>
+                    <a href="https://pass.proton.me"><i class="fa-solid fa-key"></i> Pass</a>
+                    <a href="https://docs.proton.me"><i class="fa-solid fa-file-lines"></i> Docs</a>
+                    <a href="https://wallet.proton.me"><i class="fa-solid fa-wallet"></i> Wallet</a>
+                    <a href="https://lumo.proton.me"><i class="fa-solid fa-lightbulb"></i> Lumo</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-header">
+                    <i class="fa-solid fa-play"></i> <span>Media</span>
+                </div>
+                <div class="category-links">
+                    <a href="https://netflix.com"><i class="fa-solid fa-film"></i> Netflix</a>
+                    <a href="https://primevideo.com"><i class="fa-solid fa-video"></i> Prime</a>
+                    <a href="https://nowtv.com"><i class="fa-solid fa-tv"></i> NowTV</a>
+                    <a href="https://paramountplus.com"><i class="fa-solid fa-circle-play"></i> Paramount+</a>
+                    <a href="https://disneyplus.com"><i class="fa-solid fa-wand-magic-sparkles"></i> Disney+</a>
+                    <a href="https://twitch.tv"><i class="fa-brands fa-twitch"></i> Twitch</a>
+                </div>
+            </div>
+            <div class="category-card full-width">
+                <div class="category-header">
+                    <i class="fa-solid fa-ellipsis"></i> <span>Other</span>
+                </div>
+                <div class="category-links tools-grid">
+                    <a href="https://reddit.com"><i class="fa-brands fa-reddit"></i> Reddit</a>
+                    <a href="https://instagram.com"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                    <a href="https://twitter.com"><i class="fa-brands fa-twitter"></i> Twitter</a>
+                    <a href="https://threads.net"><i class="fa-brands fa-threads"></i> Threads</a>
+                    <a href="https://wooting.io/wootility"><i class="fa-solid fa-keyboard"></i> Wootility</a>
+                    <a href="https://monkeytype.com"><i class="fa-solid fa-keyboard"></i> MonkeyType</a>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="theme-switcher">
+                <span class="theme-current">Theme: Kanagawa</span>
+                <div class="theme-options">
+                    <button class="theme-btn" data-theme="kanagawa">Kanagawa</button>
+                    <button class="theme-btn" data-theme="tokyo-night">Tokyo Night</button>
+                    <button class="theme-btn" data-theme="rose-pine">Rose Pine</button>
+                    <button class="theme-btn" data-theme="gruvbox">Gruvbox</button>
+                    <button class="theme-btn" data-theme="everforest">Everforest</button>
+                    <button class="theme-btn" data-theme="catppuccin-mocha">Catppuccin Mocha</button>
+                </div>
+            </div>
+            <div class="keyboard-hints">
+                <span class="hint"><kbd>/</kbd> Search</span>
+                <span class="hint"><kbd>1-4</kbd> Engine</span>
+                <span class="hint"><kbd>Esc</kbd> Clear</span>
+            </div>
+        </footer>
+    </div>
+
+
+
     <script src="src/js/timedateweather.js"></script>
     <script src="src/js/search.js"></script>
     <script src="src/js/autocomplete.js"></script>
+    <script src="src/js/themes.js"></script>
     <script>goon();</script>
 </body>
 </html>

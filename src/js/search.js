@@ -1,127 +1,93 @@
-// Create form element
-var form = document.createElement('form');
-form.setAttribute('id', 'search-form');
-form.setAttribute('action', 'https://www.perplexity.ai/search/'); 
-form.setAttribute('method', 'get');
-form.setAttribute('data-default-engine', 'perplexity');
-
-// Create input element
-var input = document.createElement('input');
-input.setAttribute('type', 'text');
-input.setAttribute('id', 'q');
-input.setAttribute('name', 'q');
-input.autofocus = true;
-
-// Append input to form
-form.appendChild(input);
-
-// Select the parent element where you want to append the form
-var parentElement = document.getElementById('search');
-
-// Append form to the parent element
-parentElement.appendChild(form);
-
-var event = new Event('qElementReady');
-document.dispatchEvent(event);
-
-// Search Box with Highlighted Bookmarks and Multiple Search Engines //
+// Modern Search with Engine Toggles and Bangs
 const searchForm = document.getElementById('search-form');
 const searchInput = document.getElementById('q');
+const engineBtns = document.querySelectorAll('.engine');
 
-let defaultEngine = 'brave';
-let currentEngine = defaultEngine; 
-
-const searchEngineNames = {
-  'google': 'Google',
-  'duckduckgo': 'DuckDuckGo',
-  'perplexity': 'Perplexity',
-  'reddit': 'Reddit'
+const engines = {
+    'duckduckgo': { url: 'https://duckduckgo.com/?q=', bang: '!d' },
+    'github': { url: 'https://github.com/search?q=', bang: '!gh' },
+    'youtube': { url: 'https://www.youtube.com/results?search_query=', bang: '!y' },
+    'cosmos': { url: 'https://www.cosmos.so/search/elements/', bang: '!c' }
 };
 
-function getSearchQuery(input) {
-  if (input.startsWith('g ') || input.startsWith('d ') || input.startsWith('a ') || input.startsWith('y ') || input.startsWith('r ')){
-    var parts = input.split(' ');
-    var query = parts.slice(1).join(' ');
-    return query;
-  } else {
-    return input;
-  }
+let currentEngine = 'duckduckgo';
+
+function setEngine(engineKey) {
+    currentEngine = engineKey;
+    engineBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.engine === engineKey);
+    });
+    searchInput.placeholder = `Search with ${engineKey.charAt(0).toUpperCase() + engineKey.slice(1)}...`;
 }
 
+// Add event listeners to buttons
+engineBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        setEngine(btn.dataset.engine);
+        searchInput.focus();
+    });
+});
+
 searchInput.addEventListener('input', () => {
-  const query = getSearchQuery(searchInput.value);
-  if (searchInput.value.startsWith('g ')) {
-    currentEngine = 'google';
-    searchForm.action = 'https://www.google.com/search?q=' + encodeURIComponent(query);
-    searchInput.style.borderColor = 'rgba(166, 209, 137, 1)';
-    searchInput.style.outlineColor = 'rgba(166, 209, 137, 0.5)';
-  } else if (searchInput.value.startsWith('d ')) {
-    currentEngine = 'duckduckgo';
-    searchForm.action = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
-    searchInput.style.borderColor = 'rgba(239, 159, 118, 1)';
-    searchInput.style.outlineColor = 'rgba(239, 159, 118, 0.5)';
-  } else if (searchInput.value.startsWith('a ')) {
-    currentEngine = 'amazon';
-    searchForm.action = 'https://www.amazon.com/s?k=' + encodeURIComponent(query);
-    searchInput.style.borderColor = 'rgba(30, 102, 245, 1)';
-    searchInput.style.outlineColor = 'rgba(30, 102, 245, 0.5)';
-  } else if (searchInput.value.startsWith('y ')) {
-    currentEngine = 'youtube';
-    searchForm.action = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
-    searchInput.style.borderColor = 'rgba(230, 69, 83, 1)';
-    searchInput.style.outlineColor = 'rgba(230, 69, 83, 0.5)';
-  } else if (searchInput.value.startsWith('r ')) {
-    currentEngine = 'reddit';
-    searchForm.action = 'https://www.reddit.com/r/' + encodeURIComponent(query);
-    searchInput.style.borderColor = 'rgba(254, 100, 11, 1)'; 
-    searchInput.style.outlineColor = 'rgba(254, 100, 11, 0.5)';
-  } else {
-    currentEngine = defaultEngine;
-    searchForm.action = 'https://perplexity.ai/search'; 
-    searchInput.style.borderColor = '';
-    searchInput.style.outlineColor = '';
-  }
+    const val = searchInput.value; 
+    
+    // Check for quick switches (space after bang prefix)
+    if (val === 's ') { setEngine('duckduckgo'); searchInput.value = ''; }
+    else if (val === 'g ') { setEngine('github'); searchInput.value = ''; }
+    else if (val === 'y ') { setEngine('youtube'); searchInput.value = ''; }
+    else if (val === 'c ') { setEngine('cosmos'); searchInput.value = ''; }
 });
 
 searchForm.addEventListener('submit', (e) => {
-  let query = getSearchQuery(searchInput.value);
+    e.preventDefault();
+    const val = searchInput.value.trim();
+    if (!val) return;
 
-  if (query.startsWith('http://') || query.startsWith('https://')) {
-    e.preventDefault();
-    window.location.href = query;
-    return;
-  } else if (query.endsWith('.com') || query.endsWith('.org') || query.endsWith('.net') || query.endsWith('.co.uk')) {
-    e.preventDefault();
-    window.location.href = 'http://' + query;
-    return;
-  }
+    // Handle URL direct entry
+    if (val.startsWith('http://') || val.startsWith('https://')) {
+        window.location.href = val;
+        return;
+    }
 
-  if (currentEngine === 'google') {
-    e.preventDefault();
-    window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(query);
-  } else if (currentEngine === 'duckduckgo') {
-    e.preventDefault();
-    window.location.href = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
-  } else if (currentEngine === 'amazon') {
-    e.preventDefault();
-    window.location.href = 'https://www.amazon.com/s?k=' + encodeURIComponent(query);
-  } else if (currentEngine === 'youtube') {
-    e.preventDefault();
-    window.location.href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(query);
-  } else if (currentEngine === 'reddit') {
-    e.preventDefault();
-    window.location.href = 'https://www.reddit.com/r/' + encodeURIComponent(query);
-  } else if (currentEngine === 'perplexity') { 
-    e.preventDefault();
-    window.location.href = 'https://search.perplexity.ai/search?q=' + encodeURIComponent(query);
-  }
+    // Bang logic for searches (e.g. "y term")
+    const parts = val.split(' ');
+    const firstWord = parts[0].toLowerCase();
+    
+    if (firstWord === 's' && parts.length > 1) { 
+        window.location.href = engines['duckduckgo'].url + encodeURIComponent(parts.slice(1).join(' ')); 
+    }
+    else if (firstWord === 'g' && parts.length > 1) { 
+        window.location.href = engines['github'].url + encodeURIComponent(parts.slice(1).join(' ')); 
+    }
+    else if (firstWord === 'y' && parts.length > 1) { 
+        window.location.href = engines['youtube'].url + encodeURIComponent(parts.slice(1).join(' ')); 
+    }
+    else if (firstWord === 'c' && parts.length > 1) { 
+        window.location.href = engines['cosmos'].url + encodeURIComponent(parts.slice(1).join(' ')); 
+    }
+    else {
+        // Use current active engine
+        window.location.href = engines[currentEngine].url + encodeURIComponent(val);
+    }
 });
 
-searchInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Backspace' && searchInput.value === '') {
-    currentEngine = defaultEngine;
-    searchForm.action = 'https://search.brave.com/search';
-    searchInput.style.borderColor = '';
-    searchInput.style.outlineColor = '';
-  }
+// Global Shortcuts
+document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+    }
+    if (e.key === 'Escape') {
+        searchInput.value = '';
+        searchInput.blur();
+    }
+    
+    // Engine shortcuts 1-3
+    if (document.activeElement !== searchInput) {
+        if (e.key === '1') setEngine('duckduckgo');
+        if (e.key === '2') setEngine('github');
+        if (e.key === '3') setEngine('youtube');
+        if (e.key === '4') setEngine('cosmos');
+    }
 });
