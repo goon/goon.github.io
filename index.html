@@ -164,6 +164,115 @@
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
             background-size: 100% 4px; z-index: 5; pointer-events: none; opacity: 0.2;
         }
+
+        /* Layout Stack & Project Links */
+        .layout-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+            width: 100%;
+            max-width: 900px;
+            z-index: 20;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .project-card {
+            flex: 1;
+            padding: 1.2rem 2rem;
+            border-radius: 24px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(203, 166, 247, 0.15);
+        }
+
+        .card-main {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(203, 166, 247, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            border: 1px solid rgba(203, 166, 247, 0.15);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .card-icon {
+            background: var(--accent);
+            color: var(--crust);
+            transform: rotate(5deg);
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .card-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--text);
+        }
+
+        .card-desc {
+            font-size: 0.75rem;
+            color: var(--subtext1);
+            opacity: 0.6;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .github-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--accent);
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .github-icon {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 800px) {
+            .project-links {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
@@ -172,45 +281,70 @@
     <canvas id="particle-canvas"></canvas>
     <div class="scanlines"></div>
 
-    <div class="flipper-container" id="container">
-        <div class="flipper" id="flipper">
-            <!-- Front Face -->
-            <main class="front">
-                <div id="clock">
-                    <div class="digit-group">
-                        <div class="digit-box" id="h1"><div class="digit-card">0</div></div>
-                        <div class="digit-box" id="h2"><div class="digit-card">0</div></div>
+    <div class="layout-stack">
+        <div class="flipper-container" id="container">
+            <div class="flipper" id="flipper">
+                <!-- Front Face -->
+                <main class="front">
+                    <div id="clock">
+                        <div class="digit-group">
+                            <div class="digit-box" id="h1"><div class="digit-card">0</div></div>
+                            <div class="digit-box" id="h2"><div class="digit-card">0</div></div>
+                        </div>
+                        <div class="digit-group">
+                            <div class="digit-box" id="m1"><div class="digit-card">0</div></div>
+                            <div class="digit-box" id="m2"><div class="digit-card">0</div></div>
+                        </div>
+                        <div class="digit-group">
+                            <div class="digit-box" id="s1"><div class="digit-card">0</div></div>
+                            <div class="digit-box" id="s2"><div class="digit-card">0</div></div>
+                        </div>
                     </div>
-                    <div class="digit-group">
-                        <div class="digit-box" id="m1"><div class="digit-card">0</div></div>
-                        <div class="digit-box" id="m2"><div class="digit-card">0</div></div>
+                    <div id="status">Protocol: Active // Type ? for help</div>
+                    <div class="search-area">
+                        <form id="form">
+                            <input type="text" id="search-box" autocomplete="off">
+                        </form>
                     </div>
-                    <div class="digit-group">
-                        <div class="digit-box" id="s1"><div class="digit-card">0</div></div>
-                        <div class="digit-box" id="s2"><div class="digit-card">0</div></div>
-                    </div>
-                </div>
-                <div id="status">Protocol: Active // Type ? for help</div>
-                <div class="search-area">
-                    <form id="form">
-                        <input type="text" id="search-box" autocomplete="off">
-                    </form>
-                </div>
-            </main>
+                </main>
 
-            <!-- Back Face -->
-            <aside class="back">
-                <h2 class="help-title">SEARCH PROTOCOLS</h2>
-                <div class="help-grid">
-                    <div class="help-row"><span class="kbd-tag">gh</span> GITHUB</div>
-                    <div class="help-row"><span class="kbd-tag">np</span> NIXPKGS</div>
-                    <div class="help-row"><span class="kbd-tag">hm</span> HOMEMANAGER</div>
-                    <div class="help-row"><span class="kbd-tag">w</span> WIKI</div>
-                    <div class="help-row"><span class="kbd-tag">yt</span> YOUTUBE</div>
-                    <div class="help-row"><span class="kbd-tag">r</span> REDDIT</div>
+                <!-- Back Face -->
+                <aside class="back">
+                    <h2 class="help-title">SEARCH PROTOCOLS</h2>
+                    <div class="help-grid">
+                        <div class="help-row"><span class="kbd-tag">gh</span> GITHUB</div>
+                        <div class="help-row"><span class="kbd-tag">np</span> NIXPKGS</div>
+                        <div class="help-row"><span class="kbd-tag">hm</span> HOMEMANAGER</div>
+                        <div class="help-row"><span class="kbd-tag">w</span> WIKI</div>
+                        <div class="help-row"><span class="kbd-tag">yt</span> YOUTUBE</div>
+                        <div class="help-row"><span class="kbd-tag">r</span> REDDIT</div>
+                    </div>
+                    <p style="margin-top:2rem; opacity:0.4; font-size:0.8rem">Press any key to Flip Back</p>
+                </aside>
+            </div>
+        </div>
+
+        <div class="project-links">
+            <a href="https://github.com/goon/nixos" class="project-card">
+                <div class="card-main">
+                    <div class="card-icon">N</div>
+                    <div class="card-content">
+                        <span class="card-title">nixos</span>
+                        <span class="card-desc">a blazingly mid nix os configuration featuring flakes and home manager</span>
+                    </div>
                 </div>
-                <p style="margin-top:2rem; opacity:0.4; font-size:0.8rem">Press any key to Flip Back</p>
-            </aside>
+                <svg class="github-icon" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
+            <a href="https://github.com/goon/yet-another-quickshell" class="project-card">
+                <div class="card-main">
+                    <div class="card-icon">Q</div>
+                    <div class="card-content">
+                        <span class="card-title">yet-another-quickshell</span>
+                        <span class="card-desc">a blazingly mid desktop shell built with quickshell </span>
+                    </div>
+                </div>
+                <svg class="github-icon" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
         </div>
     </div>
 
